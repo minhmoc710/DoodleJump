@@ -17,13 +17,17 @@ public class Player extends Entity {
     public void setDefaultValue() {
         x = 100;
         y = 100;
-        speed = 1;
-        acceleration = 0.01;
+        speed = 2;
+        acceleration = 0.04;
     }
 
     private void jump(){
-        speed = -2;
+        speed = -5;
         y += speed;
+    }
+
+    public void hitPlatform() {
+        jump();
     }
 
     public void update() {
@@ -32,14 +36,26 @@ public class Player extends Entity {
             y += speed;
         } else {
             y = gamePanel.getHeight() - 60;
+            jump();
+        }
+        if (x < 0) {
+            x = gamePanel.getWidth();
+        }
+        if (x > gamePanel.getWidth()) {
+            x = 0;
         }
         if (keyHandler.leftPressed) {
-            x -= speed;
+            x -= 2;
         }
         if (keyHandler.rightPressed) {
-            x += speed;
+            x += 2;
         }
     }
+
+    public Point getPlayerLocation() {
+        return new Point((int) x, (int) y);
+    }
+
 
     public void draw(Graphics2D g2d) {
         g2d.setColor(Color.WHITE);
